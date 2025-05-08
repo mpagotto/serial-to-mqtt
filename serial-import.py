@@ -5,12 +5,19 @@ import time
 # Serial port configuration
 SERIAL_PORT = '/dev/tty.usbserial-0001'
 
-BAUD_RATE = 115200  # Update this as needed
+#BAUD_RATE = 115200  # Update this as needed
+#SERIAL_PORT = '/dev/tty.usbserial-0001'
+#SERIAL_PORT = '/dev/ttyUSB0'
 
+
+BAUD_RATE = 115200  # Update this as needed
 # MQTT broker configuration
 MQTT_BROKER = '127.0.0.1'
 MQTT_PORT = 1883  # Update this as needed (default port)
 MQTT_TOPIC = '08:d1:f9:e1:eb:6c'
+
+MQTT_USERNAME = 'user'
+MQTT_PASSWORD = 'password'
 
 # Initialize serial connection
 try:
@@ -23,6 +30,8 @@ except serial.SerialException as e:
 # Initialize MQTT client
 client = mqtt.Client()
 
+# Set MQTT credentials
+client.username_pw_set(MQTT_USERNAME, MQTT_PASSWORD)
 
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
