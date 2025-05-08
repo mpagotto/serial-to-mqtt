@@ -4,12 +4,13 @@ import time
 
 # Serial port configuration
 SERIAL_PORT = '/dev/tty.usbserial-0001'
+
 BAUD_RATE = 115200  # Update this as needed
 
 # MQTT broker configuration
-MQTT_BROKER = 'localhost'
+MQTT_BROKER = '127.0.0.1'
 MQTT_PORT = 1883  # Update this as needed (default port)
-MQTT_TOPIC = 'topic'
+MQTT_TOPIC = '08:d1:f9:e1:eb:6c'
 
 # Initialize serial connection
 try:
@@ -44,7 +45,7 @@ try:
 
             # Publish to MQTT
             client.publish(MQTT_TOPIC, line)
-            #print(f"Published to MQTT: {line}")
+            print(f"Published to MQTT {MQTT_TOPIC}: {line}")
 
         # Add a small delay to avoid high CPU usage
         time.sleep(0.1)
