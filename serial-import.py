@@ -3,10 +3,10 @@ import paho.mqtt.client as mqtt
 import time
 
 # Serial port configuration
-SERIAL_PORT = '/dev/tty.usbserial-0001'
+#SERIAL_PORT = '/dev/tty.usbserial-0001'
 
 #BAUD_RATE = 115200  # Update this as needed
-#SERIAL_PORT = '/dev/tty.usbserial-0001'
+SERIAL_PORT = '/dev/tty.usbserial-0001'
 #SERIAL_PORT = '/dev/ttyUSB0'
 
 
@@ -14,7 +14,7 @@ BAUD_RATE = 115200  # Update this as needed
 # MQTT broker configuration
 MQTT_BROKER = '127.0.0.1'
 MQTT_PORT = 1883  # Update this as needed (default port)
-MQTT_TOPIC = '08:d1:f9:e1:eb:6c'
+MQTT_TOPIC = '08:d1:f9:df:de:50'
 
 MQTT_USERNAME = 'user'
 MQTT_PASSWORD = 'password'
@@ -49,12 +49,13 @@ try:
     while True:
         # Read line from serial console
         if ser.in_waiting > 0:
-            line = ser.readline().decode('utf-8').strip()
+            line = ser.readline().decode('utf-8').replace('Sending: 08:d1:f9:df:de:50 ','').strip()
             #print(f"Read from serial: {line}")
 
-            # Publish to MQTT
-            client.publish(MQTT_TOPIC, line)
-            print(f"Published to MQTT {MQTT_TOPIC}: {line}")
+            # Publish to MQTT;
+            if line.startswith('0,0'):
+                        client.publish(MQTT_TOPIC, line)
+            print(f"{line}")
 
         # Add a small delay to avoid high CPU usage
         time.sleep(0.1)
